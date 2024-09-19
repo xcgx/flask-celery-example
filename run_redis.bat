@@ -7,7 +7,7 @@ set ERRORS=0
 REM 检查并下载 Redis
 if not exist redis-stable (
     echo Downloading Redis...
-    powershell -Command "Invoke-WebRequest -Uri http://download.redis.io/releases/redis-6.2.6.zip -OutFile redis-stable.zip"
+    powershell -Command "Invoke-WebRequest -Uri https://github.com/xcgx/flask-celery-example/blob/main/redis-windows-7.4.0.zip -OutFile redis-stable.zip"
     if %errorlevel% neq 0 (
         echo Error: Failed to download Redis!
         set ERRORS=1
