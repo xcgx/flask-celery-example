@@ -4,27 +4,19 @@ setlocal
 REM 设置错误处理
 set ERRORS=0
 
-REM 检查并下载 Redis
-if not exist redis-stable (
-    echo Downloading Redis...
-    powershell -Command "Invoke-WebRequest -Uri https://github.com/xcgx/flask-celery-example/blob/main/redis-windows-7.4.0.zip -OutFile redis-stable.zip"
-    if %errorlevel% neq 0 (
-        echo Error: Failed to download Redis!
-        set ERRORS=1
-        goto :end
-    )
-    echo Extracting Redis...
-    powershell -Command "Expand-Archive -Path redis-stable.zip -DestinationPath ."
-    if %errorlevel% neq 0 (
-        echo Error: Failed to extract Redis!
-        set ERRORS=1
-        goto :end
-    )
-    del redis-stable.zip
-)
+REM 设置 Redis 服务器的下载链接
+set REDIS_URL=https://ghp.ci/https://github.com/xcgx/flask-celery-example/blob/main/redis-server.exe
 
-REM 进入 Redis 目录
-cd redis-6.2.6
+REM 检查并下载 Redis 服务器
+if not exist redis-server.exe (
+    echo Downloading Redis server...
+    powershell -Command "Invoke-WebRequest -Uri %REDIS_URL% -OutFile redis-server.exe"
+    if %errorlevel% neq 0 (
+        echo Error: Failed to download Redis server!
+        set ERRORS=1
+        goto :end
+    )
+)
 
 REM 启动 Redis 服务器
 echo Starting Redis server...
